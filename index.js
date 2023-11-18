@@ -32,7 +32,7 @@ app.get("/comic/:id", async (req, res) => {
 
 app.get("/characters", async (req, res) => {
   try {
-    const { page, name } = req.query;
+    const { page } = req.query;
     const limit = 100;
     let pageToSend = 1;
     if (page) {
@@ -40,7 +40,7 @@ app.get("/characters", async (req, res) => {
     }
     const skip = (pageToSend - 1) * limit;
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?name=${name}&limit=${limit}&skip=${skip}&apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?limit=${limit}&skip=${skip}&apiKey=${process.env.API_KEY}`
     );
     res.json({ data: response.data });
   } catch (error) {
