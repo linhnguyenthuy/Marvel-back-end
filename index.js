@@ -40,7 +40,7 @@ app.get("/characters", async (req, res) => {
     }
     const skip = (pageToSend - 1) * limit;
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?limit=${limit}&skip=${skip}&name=${name}apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?limit=${limit}&skip=${skip}&name=${name}&apiKey=${process.env.API_KEY}`
     );
     res.json(response.data);
   } catch (error) {
