@@ -71,8 +71,25 @@ app.get("/characters/comics/:id", async (req, res) => {
 });
 app.get("/comics", async (req, res) => {
   try {
+    const { page, search } = req.query;
+    const limit = 100;
+    let pageToSend = 1;
+    if (page) {
+      pageToSend = page;
+    }
+    const skip = (pageToSend - 1) * limit;
+    let params = {
+      limit: limit,
+      skip: skip,
+      apiKey: process.env.API_KEY,
+    };
+
+    if (search) {
+      params.name = search;
+    }
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics`,
+      { params }
     );
     res.json(response.data);
   } catch (error) {
