@@ -32,15 +32,26 @@ app.get("/comic/:id", async (req, res) => {
 
 app.get("/characters", async (req, res) => {
   try {
-    const { page } = req.query;
+    const { page, search } = req.query;
     const limit = 100;
     let pageToSend = 1;
     if (page) {
       pageToSend = page;
     }
     const skip = (pageToSend - 1) * limit;
+    let params = {
+      limit: limit,
+      skip: skip,
+      apiKey: process.env.API_KEY,
+    };
+
+    if (search) {
+      params.name = search;
+    }
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?limit=${limit}&skip=${skip}&apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters`,
+      { params }
+      // `https://lereacteur-marvel-api.herokuapp.com/characters?limit=${limit}&skip=${skip}&apiKey=${process.env.API_KEY}`
     );
     res.json(response.data);
   } catch (error) {
