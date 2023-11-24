@@ -85,7 +85,7 @@ app.get("/comics", async (req, res) => {
     };
 
     if (search) {
-      params.name = search;
+      params.title = search;
     }
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics`,
